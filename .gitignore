@@ -1,0 +1,15 @@
+.vs/
+*.sln
+
+[Bb]inaries/
+**/[Bb]inaries/
+Intermediate/
+**Intermediate/
+
+Binaries/
+Build/
+Saved/
+DerivedDataCache/
+Plugins/
+
+Config/DefaultEditorPerProjectUserSettings.ini
