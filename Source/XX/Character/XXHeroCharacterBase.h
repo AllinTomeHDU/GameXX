@@ -21,6 +21,6 @@ protected:
 
 
 private:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Multiplayer Room", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* HeroMesh;
 };

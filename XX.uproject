@@ -31,7 +31,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "SessionsSystem",
+			"Name": "MultiplayerOnlineSystem",
 			"Enabled": true
 		}
 	]
