@@ -6,6 +6,8 @@
 #include "MotionMatchingAls/3C/Character/MMAlsCharacter.h"
 #include "XXHeroCharacterBase.generated.h"
 
+class UWidgetComponent;
+
 /**
  * 
  */
@@ -23,4 +25,7 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Multiplayer Room", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* HeroMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Multiplayer Room", meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* HeadTopWidget;
 };

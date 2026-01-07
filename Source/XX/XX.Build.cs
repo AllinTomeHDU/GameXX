@@ -13,13 +13,16 @@ public class XX : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore", 
-			"EnhancedInput" 
+			"EnhancedInput",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { 
 			"MotionMatchingAls",
 			"SessionsSystem",
-		});
+			"UMG",
+            "OnlineSubsystem",
+            "OnlineSubsystemSteam",
+        });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
