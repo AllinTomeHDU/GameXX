@@ -10,7 +10,10 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"MotionMatchingAls",
-				"Engine"
+				"Engine",
+				"GameplayAbilities",
+				"CoreUObject",
+				"UMG"
 			]
 		}
 	],
@@ -40,6 +43,10 @@
 		},
 		{
 			"Name": "OnlineSubsystemSteam",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayAbilities",
 			"Enabled": true
 		}
 	]

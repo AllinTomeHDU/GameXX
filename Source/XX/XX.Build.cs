@@ -14,7 +14,10 @@ public class XX : ModuleRules
 			"Engine", 
 			"InputCore", 
 			"EnhancedInput",
-		});
+            "GameplayAbilities",
+            "GameplayTasks",
+            "GameplayTags"
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { 
 			"MotionMatchingAls",
@@ -22,6 +25,7 @@ public class XX : ModuleRules
 			"UMG",
             "OnlineSubsystem",
             "OnlineSubsystemSteam",
+			
         });
 
 		// Uncomment if you are using Slate UI

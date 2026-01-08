@@ -21,7 +21,6 @@ void AXXMultiplayerGameMode::PostSeamlessTravel()
 {
 	Super::PostSeamlessTravel();
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PostSeamlessTravel"));
 }
 
 void AXXMultiplayerGameMode::HandleSeamlessTravelPlayer(AController*& C)
@@ -36,11 +35,14 @@ void AXXMultiplayerGameMode::HandleSeamlessTravelPlayer(AController*& C)
 	auto SessionsInterface = IOnlineSubsystem::Get()->GetSessionInterface();
 	if (!IsValid(RoomSubsystem) || !SessionsInterface.IsValid()) return;
 
-	// 先于BeginPlay()的初始化
-	RoomSubsystem->OnTransionWidgetCloseDelegate.AddUObject(this, &ThisClass::StartMultiplayerGame);
-	if (auto CurrentSession = SessionsInterface->GetNamedSession(NAME_GameSession))
+	if (C->IsLocalController())
 	{
-		CurrentSession->SessionSettings.Get(FName("MaxPlayerNum"), MaxPlayerNum);
+		// 先于BeginPlay()的初始化
+		RoomSubsystem->OnTransionWidgetCloseDelegate.AddUObject(this, &ThisClass::StartMultiplayerGame);
+		if (auto CurrentSession = SessionsInterface->GetNamedSession(NAME_GameSession))
+		{
+			CurrentSession->SessionSettings.Get(FName("MaxPlayerNum"), MaxPlayerNum);
+		}
 	}
 
 	MultiGameState = Cast<AXXMultiplayerGameState>(GameState);
