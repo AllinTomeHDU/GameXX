@@ -18,15 +18,24 @@ class XX_API UXXUserWidgetBase : public UUserWidget
 	
 public:
 	UFUNCTION(BlueprintCallable)
+	void InitWidgetController();
+
+	UFUNCTION(BlueprintCallable)
 	void SetWidgetController(UXXWidgetControllerObject* InWidgetController);
 	
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
-	void SetWidgetControllerBP();
+	void OnInitWidgetControllerComplete();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetWidgetControllerComplete();
 
 private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UXXWidgetControllerObject* WidgetController;
+
+	UPROPERTY(EditAnywhere, Category = "Widget Controller")
+	TSubclassOf<UXXWidgetControllerObject> WidgetControllerClass;
 
 public:
 	FORCEINLINE UXXWidgetControllerObject* GetWidgetController() const { return WidgetController; }

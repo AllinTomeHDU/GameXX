@@ -2,12 +2,21 @@
 
 
 #include "XXWidgetControllerObject.h"
+#include "XX/UI/Controller/XXWidgetControllerObject.h"
+#include "XX/Controller/XXHeroPlayerController.h"
+#include "XX/Player/XXHeroPlayerState.h"
 
 
-void UXXWidgetControllerObject::SetWidgetControllerParams(const FWidgetControllerParams& Params)
+void UXXWidgetControllerObject::Init()
 {
-	PlayerController = Params.PlayerController;
-	PlayerState = Params.PlayerState;
-	AbilitySystem = Params.AbilitySystem;
-	AttributeSet = Params.AttributeSet;
+	PlayerController = Cast<AXXHeroPlayerController>(GetWorld()->GetFirstPlayerController());
+	check(PlayerController);
+	PlayerState = Cast<AXXHeroPlayerState>(PlayerController->GetPlayerState<APlayerState>());
+	check(PlayerState);
+	AbilitySystem = PlayerState->GetBaseAbilitySystemComponent();
+	AttributeSet = PlayerState->GetBaseAttributeSet();
+	check(AbilitySystem && AttributeSet);
+
+	BindCallbacksToDependencies();
 }
+

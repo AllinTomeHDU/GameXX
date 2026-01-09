@@ -24,12 +24,7 @@ class XX_API AXXGameHUD : public AHUD
 	GENERATED_BODY()
 
 public:
-	void InitOverlay(
-		AXXHeroPlayerController* PC,
-		AXXHeroPlayerState* PS,
-		UXXBaseAbilitySystemComponent* ASC,
-		UXXBaseAttributeSet* AS
-	);
+	void InitOverlay();
 	
 protected:
 	virtual void BeginPlay() override;

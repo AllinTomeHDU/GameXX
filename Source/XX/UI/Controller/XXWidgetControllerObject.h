@@ -11,29 +11,6 @@ class AXXHeroPlayerState;
 class UXXBaseAbilitySystemComponent;
 class UXXBaseAttributeSet;
 
-USTRUCT()
-struct FWidgetControllerParams
-{
-	GENERATED_BODY()
-
-	FWidgetControllerParams() {}
-	FWidgetControllerParams(
-		AXXHeroPlayerController* PC,
-		AXXHeroPlayerState* PS,
-		UXXBaseAbilitySystemComponent* ASC,
-		UXXBaseAttributeSet* AS
-	) : PlayerController(PC), PlayerState(PS), AbilitySystem(ASC), AttributeSet(AS) {}
-
-	AXXHeroPlayerController* PlayerController;
-
-	AXXHeroPlayerState* PlayerState;
-
-	UXXBaseAbilitySystemComponent* AbilitySystem;
-
-	UXXBaseAttributeSet* AttributeSet;
-};
-
-
 /**
  * 
  */
@@ -43,8 +20,13 @@ class XX_API UXXWidgetControllerObject : public UObject
 	GENERATED_BODY()
 
 public:
-	void SetWidgetControllerParams(const FWidgetControllerParams& Params);
-	
+	virtual void Init();
+
+	virtual void BindCallbacksToDependencies() {};
+
+	UFUNCTION(BlueprintCallable)
+	virtual void BroadcastCurrentValues() {};
+
 protected:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	AXXHeroPlayerController* PlayerController;
@@ -57,5 +39,5 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UXXBaseAttributeSet* AttributeSet;
-	
+
 };

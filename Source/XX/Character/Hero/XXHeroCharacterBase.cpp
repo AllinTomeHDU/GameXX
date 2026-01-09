@@ -58,7 +58,7 @@ void AXXHeroCharacterBase::InitAbilitySystemActorInfo()
 	{
 		if (auto GameHUD = Cast<AXXGameHUD>(PC->GetHUD()))
 		{
-			GameHUD->InitOverlay(PC, PS, AbilitySystem, AttributeSet);
+			GameHUD->InitOverlay();
 		}
 	}
 }
