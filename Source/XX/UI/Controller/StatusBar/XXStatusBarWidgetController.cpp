@@ -5,11 +5,6 @@
 #include "XX/GAS/AbilitySystem/XXHeroAbilitySystemComponent.h"
 
 
-void UXXStatusBarWidgetController::Init()
-{
-	Super::Init();
-}
-
 void UXXStatusBarWidgetController::BroadcastCurrentValues()
 {
 	OnHealthChanged.Broadcast(AttributeSet->GetHealth());

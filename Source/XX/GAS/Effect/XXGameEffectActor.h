@@ -6,8 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "XXGameEffectActor.generated.h"
 
-class USkeletalMeshComponent;
-class USphereComponent;
+class UGameplayEffect;
 
 UCLASS()
 class XX_API AXXGameEffectActor : public AActor
@@ -18,31 +17,10 @@ public:
 	AXXGameEffectActor();
 
 protected:
-	virtual void BeginPlay() override;
-
-	UFUNCTION()
-	virtual void OnSphereOverlap(
-		UPrimitiveComponent* OverlappedComponent,
-		AActor* OtherActor,
-		UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex,
-		bool bFromSwip,
-		const FHitResult& SweepResult
-	);
-
-	UFUNCTION()
-	virtual void OnSphereOverlapEnd(
-		UPrimitiveComponent* OverlappedComponent,
-		AActor* OtherActor,
-		UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex
-	);
-
+	UFUNCTION(BlueprintCallable)
+	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> InEffectClass);
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
-
-	UPROPERTY(VisibleAnywhere)
-	USphereComponent* OverlapShpere;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Applied Effects", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UGameplayEffect> InstanceGameplayEeffectClass;
 };

@@ -23,13 +23,13 @@ class XX_API UXXStatusBarWidgetController : public UXXWidgetControllerObject
 	GENERATED_BODY()
 
 public:
-	virtual void Init() override;
+	UFUNCTION(BlueprintCallable)
+	virtual void BroadcastCurrentValues();
 	
 protected:
 	virtual void BindCallbacksToDependencies() override;
 
-	virtual void BroadcastCurrentValues() override;
-
+protected:
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChangedSignature OnHealthChanged;
 

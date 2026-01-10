@@ -22,8 +22,8 @@ public:
 	AXXCharacterBase(const FObjectInitializer& ObjectInitializer);
 
 	// IXXGASInterface Start~
-	virtual UXXBaseAbilitySystemComponent* GetBaseAbilitySystemComponent() override { return AbilitySystem; };
-	virtual UXXBaseAttributeSet* GetBaseAttributeSet() override { return AttributeSet; };
+	virtual UXXBaseAbilitySystemComponent* GetBaseAbilitySystemComponent() const override { return AbilitySystem; };
+	virtual UXXBaseAttributeSet* GetBaseAttributeSet() const override { return AttributeSet; };
 	// IXXGASInterface End~
 
 protected:

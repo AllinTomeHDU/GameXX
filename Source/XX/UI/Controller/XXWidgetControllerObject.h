@@ -22,10 +22,8 @@ class XX_API UXXWidgetControllerObject : public UObject
 public:
 	virtual void Init();
 
+protected:
 	virtual void BindCallbacksToDependencies() {};
-
-	UFUNCTION(BlueprintCallable)
-	virtual void BroadcastCurrentValues() {};
 
 protected:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
