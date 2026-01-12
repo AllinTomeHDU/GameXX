@@ -17,12 +17,17 @@ public:
 	UXXHeroAttributeSet();
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Stamina, Category = "Base Attributes")
-	FGameplayAttributeData Stamina;
+public:
+	/**
+	* 最终属性值
+	*/
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Stamina, Category = "TotalAttributes|Status")
+	FGameplayAttributeData Stamina;	// 体力值
 	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, Stamina);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxStamina, Category = "Base Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxStamina, Category = "TotalAttributes|Status")
 	FGameplayAttributeData MaxStamina;
 	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, MaxStamina);
 

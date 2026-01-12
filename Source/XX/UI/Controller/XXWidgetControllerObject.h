@@ -11,6 +11,9 @@ class AXXHeroPlayerState;
 class UXXBaseAbilitySystemComponent;
 class UXXBaseAttributeSet;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
+
+
 /**
  * 
  */
