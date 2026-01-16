@@ -9,6 +9,7 @@
 
 class UXXBaseAbilitySystemComponent;
 class UXXBaseAttributeSet;
+class UGameplayEffect;
 
 /**
  * 
@@ -36,5 +37,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UXXBaseAttributeSet* AttributeSet;
-	
+
+	UPROPERTY(EditAnywhere, Category = "GAS|Effects")
+	TArray<TSubclassOf<UGameplayEffect>> InitEffectClassArr;
 };

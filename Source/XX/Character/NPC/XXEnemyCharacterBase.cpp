@@ -21,4 +21,5 @@ void AXXEnemyCharacterBase::BeginPlay()
 	Super::BeginPlay();
 
 	AbilitySystem->InitAbilityActorInfo(this, this);
+	AttributeSet->InitAttributes(InitEffectClassArr);
 }

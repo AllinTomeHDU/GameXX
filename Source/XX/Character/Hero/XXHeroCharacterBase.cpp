@@ -5,6 +5,7 @@
 #include "XX/Player/XXHeroPlayerState.h"
 #include "XX/Controller/XXHeroPlayerController.h"
 #include "XX/GAS/AbilitySystem/XXHeroAbilitySystemComponent.h"
+#include "XX/GAS/AttributeSet/XXHeroAttributeSet.h"
 #include "XX/UI/HUD/XXGameHUD.h"
 #include "Components/WidgetComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -61,4 +62,5 @@ void AXXHeroCharacterBase::InitAbilitySystemActorInfo()
 			GameHUD->InitOverlay();
 		}
 	}
+	AttributeSet->InitAttributes(InitEffectClassArr);
 }
