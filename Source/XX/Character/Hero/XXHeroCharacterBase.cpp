@@ -34,6 +34,7 @@ void AXXHeroCharacterBase::PossessedBy(AController* NewController)
 	if (IsPlayerControlled())
 	{
 		InitAbilitySystemActorInfo();
+		AbilitySystem->AddCharacterAbilities(InitAbilityClassArr);
 	}
 }
 

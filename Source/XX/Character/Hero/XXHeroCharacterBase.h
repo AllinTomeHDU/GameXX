@@ -33,5 +33,4 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Multiplayer Room", meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent* HeadTopWidget;
-
 };

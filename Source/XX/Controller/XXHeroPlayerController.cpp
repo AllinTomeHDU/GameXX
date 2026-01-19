@@ -4,6 +4,9 @@
 #include "XXHeroPlayerController.h"
 #include "Room/MultiplayerRoomSubsystem.h"
 #include "GameFramework/PlayerStart.h"
+#include "InputMappingContext.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "Kismet/GameplayStatics.h"
 #include "EngineUtils.h"
 
@@ -11,6 +14,28 @@
 AXXHeroPlayerController::AXXHeroPlayerController()
 {
 	bReplicates = true;
+}
+
+void AXXHeroPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+}
+
+void AXXHeroPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
+	if (EnhancedInputComponent)
+	{
+
+	}
+
+	auto EnhancedInputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	if (EnhancedInputSubsystem)
+	{
+		EnhancedInputSubsystem->AddMappingContext(IMC_GAS, GASInputsPriority);
+	}
 }
 
 void AXXHeroPlayerController::BeginPlay()

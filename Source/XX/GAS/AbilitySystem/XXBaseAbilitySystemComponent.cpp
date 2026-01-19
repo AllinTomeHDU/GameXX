@@ -2,6 +2,7 @@
 
 
 #include "XXBaseAbilitySystemComponent.h"
+#include "Abilities/GameplayAbility.h"
 
 
 void UXXBaseAbilitySystemComponent::BeginPlay()
@@ -9,6 +10,18 @@ void UXXBaseAbilitySystemComponent::BeginPlay()
 	Super::BeginPlay();
 
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &ThisClass::OnEffectApplied);
+}
+
+void UXXBaseAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& AbilitiesClass)
+{
+	if (GetOwnerRole() != ENetRole::ROLE_Authority) return;
+
+	for (auto AbilityClass : AbilitiesClass)
+	{
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
+		GiveAbility(AbilitySpec);
+		//TryActivateAbility(AbilitySpec.Handle);
+	}
 }
 
 void UXXBaseAbilitySystemComponent::OnEffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)

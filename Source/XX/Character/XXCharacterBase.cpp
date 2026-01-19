@@ -10,5 +10,9 @@ AXXCharacterBase::AXXCharacterBase(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void AXXCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
 
+}
 

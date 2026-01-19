@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "XXBaseAbilitySystemComponent.generated.h"
 
+class UGameplayAbility;
+
 /**
  * 
  */
@@ -16,6 +18,8 @@ class XX_API UXXBaseAbilitySystemComponent : public UAbilitySystemComponent
 	
 public:
 	virtual void BeginPlay() override;
+
+	virtual void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& AbilitiesClass);
 
 protected:
 	virtual void OnEffectApplied(

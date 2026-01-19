@@ -10,6 +10,7 @@
 class UXXBaseAbilitySystemComponent;
 class UXXBaseAttributeSet;
 class UGameplayEffect;
+class UGameplayAbility;
 
 /**
  * 
@@ -28,8 +29,7 @@ public:
 	// IXXGASInterface End~
 
 protected:
-	
-
+	virtual void BeginPlay() override;
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -38,6 +38,10 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UXXBaseAttributeSet* AttributeSet;
 
+	UPROPERTY(EditAnywhere, Category = "GAS|Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> InitAbilityClassArr;
+
 	UPROPERTY(EditAnywhere, Category = "GAS|Effects")
 	TArray<TSubclassOf<UGameplayEffect>> InitEffectClassArr;
+
 };
