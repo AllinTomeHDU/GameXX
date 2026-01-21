@@ -26,12 +26,5 @@ protected:
 	void Server_SpawnHeroCharacter(UClass* InClass);
 
 private:
-	UPROPERTY(EditAnywhere, Category = "GAS|Inputs")
-	UInputMappingContext* IMC_GAS;
-
-	UPROPERTY(EditAnywhere, Category = "GAS|Inputs")
-	int32 GASInputsPriority = 1;
-
-	UPROPERTY(EditAnywhere, Category = "GAS|Inputs")
-	UInputAction* IA_AbilityQ;
+	
 };

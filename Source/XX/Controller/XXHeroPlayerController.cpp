@@ -25,17 +25,6 @@ void AXXHeroPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
-	if (EnhancedInputComponent)
-	{
-
-	}
-
-	auto EnhancedInputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	if (EnhancedInputSubsystem)
-	{
-		EnhancedInputSubsystem->AddMappingContext(IMC_GAS, GASInputsPriority);
-	}
 }
 
 void AXXHeroPlayerController::BeginPlay()

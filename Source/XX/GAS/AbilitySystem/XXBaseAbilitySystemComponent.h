@@ -28,4 +28,6 @@ protected:
 		FActiveGameplayEffectHandle ActiveEffectHandle
 	);
 	
+private:
+
 };

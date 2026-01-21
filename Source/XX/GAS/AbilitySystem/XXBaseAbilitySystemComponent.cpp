@@ -16,11 +16,11 @@ void UXXBaseAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclass
 {
 	if (GetOwnerRole() != ENetRole::ROLE_Authority) return;
 
+	// ×¢²áAbilities
 	for (auto AbilityClass : AbilitiesClass)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		GiveAbility(AbilitySpec);
-		//TryActivateAbility(AbilitySpec.Handle);
+		FGameplayAbilitySpecHandle AbilityHandle = GiveAbility(AbilitySpec);
 	}
 }
 
