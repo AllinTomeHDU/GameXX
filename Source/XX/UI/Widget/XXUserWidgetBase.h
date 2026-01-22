@@ -21,7 +21,7 @@ public:
 	void InitWidgetController();
 
 	UFUNCTION(BlueprintCallable)
-	void SetWidgetController(UXXWidgetControllerObject* InWidgetController);
+	void SetWidgetController(UObject* InWidgetController);
 	
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -32,11 +32,11 @@ protected:
 
 private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UXXWidgetControllerObject* WidgetController;
+	UObject* WidgetController;
 
 	UPROPERTY(EditAnywhere, Category = "Widget Controller")
-	TSubclassOf<UXXWidgetControllerObject> WidgetControllerClass;
+	TSubclassOf<UObject> WidgetControllerClass;
 
 public:
-	FORCEINLINE UXXWidgetControllerObject* GetWidgetController() const { return WidgetController; }
+	FORCEINLINE UObject* GetWidgetController() const { return WidgetController; }
 };

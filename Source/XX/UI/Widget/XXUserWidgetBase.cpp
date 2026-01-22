@@ -12,13 +12,16 @@ void UXXUserWidgetBase::InitWidgetController()
 	checkf(WidgetControllerClass, TEXT("WidgetControllerClass Is Null"));
 	if (!IsValid(WidgetController))
 	{
-		WidgetController = NewObject<UXXWidgetControllerObject>(GetWorld(), WidgetControllerClass);
+		WidgetController = NewObject<UObject>(GetWorld(), WidgetControllerClass);
 	}
-	WidgetController->Init();
+	if (auto WC = Cast<UXXWidgetControllerObject>(WidgetController))
+	{
+		WC->Init();
+	}
 	OnInitWidgetControllerComplete();
 }
 
-void UXXUserWidgetBase::SetWidgetController(UXXWidgetControllerObject* InWidgetController)
+void UXXUserWidgetBase::SetWidgetController(UObject* InWidgetController)
 {
 	WidgetController = InWidgetController;
 	OnSetWidgetControllerComplete();

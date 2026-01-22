@@ -16,6 +16,8 @@ class XX_API UXXOverlayWidgetController : public UXXWidgetControllerObject
 {
 	GENERATED_BODY()
 	
+public:
+
 protected:
 	
 };

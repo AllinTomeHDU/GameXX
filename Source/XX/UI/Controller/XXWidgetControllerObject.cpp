@@ -2,7 +2,6 @@
 
 
 #include "XXWidgetControllerObject.h"
-#include "XX/UI/Controller/XXWidgetControllerObject.h"
 #include "XX/Controller/XXHeroPlayerController.h"
 #include "XX/Player/XXHeroPlayerState.h"
 

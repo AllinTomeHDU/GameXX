@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "XXNoPlayerCharacterBase.h"
+#include "XX/UI/Controller/StatusBar/XXStatusBarWidgetController.h"
 #include "XXEnemyCharacterBase.generated.h"
 
 /**
@@ -19,4 +20,12 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+
+	void InitHeadTopWidget();
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnMaxHealthChanged;
 };

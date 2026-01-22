@@ -4,6 +4,8 @@
 #include "XXEnemyCharacterBase.h"
 #include "XX/GAS/AbilitySystem/XXEnemyAbilitySystemComponent.h"
 #include "XX/GAS/AttributeSet/XXEnemyAttributeSet.h"
+#include "XX/UI/Widget/XXUserWidgetBase.h"
+#include "Components/WidgetComponent.h"
 
 
 AXXEnemyCharacterBase::AXXEnemyCharacterBase(const FObjectInitializer& ObjectInitializer)
@@ -24,4 +26,29 @@ void AXXEnemyCharacterBase::BeginPlay()
 	AbilitySystem->AddCharacterAbilities(InitAbilityClassArr);
 	AttributeSet->InitAttributes(InitEffectClassArr);
 
+	InitHeadTopWidget();
+}
+
+void AXXEnemyCharacterBase::InitHeadTopWidget()
+{
+	if (auto Widget = Cast<UXXUserWidgetBase>(HeadTopWidget->GetUserWidgetObject()))
+	{
+		Widget->SetWidgetController(this);
+	}
+
+	AbilitySystem->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			OnHealthChanged.Broadcast(Data.NewValue);
+		}
+	);
+	AbilitySystem->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetMaxHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			OnMaxHealthChanged.Broadcast(Data.NewValue);
+		}
+	);
+
+	OnHealthChanged.Broadcast(AttributeSet->GetHealth());
+	OnMaxHealthChanged.Broadcast(AttributeSet->GetMaxHealth());
 }
