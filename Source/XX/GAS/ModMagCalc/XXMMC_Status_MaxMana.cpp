@@ -15,7 +15,7 @@ UXXMMC_Status_MaxMana::UXXMMC_Status_MaxMana()
 	MaxManaTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	MaxManaTempDef.bSnapshot = false;
 
-	PrimalForceDef.AttributeToCapture = UXXHeroAttributeSet::GetPrimalForceAttribute();
+	PrimalForceDef.AttributeToCapture = UXXBaseAttributeSet::GetPrimalForceAttribute();
 	PrimalForceDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	PrimalForceDef.bSnapshot = false;
 

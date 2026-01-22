@@ -7,11 +7,11 @@
 
 UXXMMC_Primary_Insight::UXXMMC_Primary_Insight()
 {
-	InsightBaseDef.AttributeToCapture = UXXHeroAttributeSet::GetInsightBaseAttribute();
+	InsightBaseDef.AttributeToCapture = UXXBaseAttributeSet::GetInsightBaseAttribute();
 	InsightBaseDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	InsightBaseDef.bSnapshot = false;
 
-	InsightTempDef.AttributeToCapture = UXXHeroAttributeSet::GetInsightTempAttribute();
+	InsightTempDef.AttributeToCapture = UXXBaseAttributeSet::GetInsightTempAttribute();
 	InsightTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	InsightTempDef.bSnapshot = false;
 

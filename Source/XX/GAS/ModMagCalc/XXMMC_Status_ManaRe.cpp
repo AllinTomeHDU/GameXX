@@ -15,7 +15,7 @@ UXXMMC_Status_ManaRe::UXXMMC_Status_ManaRe()
 	ManaReTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	ManaReTempDef.bSnapshot = false;
 
-	PrimalForceDef.AttributeToCapture = UXXHeroAttributeSet::GetPrimalForceAttribute();
+	PrimalForceDef.AttributeToCapture = UXXBaseAttributeSet::GetPrimalForceAttribute();
 	PrimalForceDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	PrimalForceDef.bSnapshot = false;
 
@@ -39,5 +39,5 @@ float UXXMMC_Status_ManaRe::CalculateBaseMagnitude_Implementation(const FGamepla
 	float PrimalForceValue = 0.f;
 	GetCapturedAttributeMagnitude(PrimalForceDef, Spec, EvaluateParameters, PrimalForceValue);
 
-	return ManaReBaseValue + ManaReTempValue + PrimalForceValue * 0.005f;
+	return ManaReBaseValue + ManaReTempValue + PrimalForceValue * 0.01f;
 }

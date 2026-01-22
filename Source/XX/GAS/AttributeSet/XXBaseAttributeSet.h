@@ -61,6 +61,18 @@ public:
 	FGameplayAttributeData DefenseBase;  // 防御力
 	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, DefenseBase);
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_VitalityBase, Category = "BaseAttributes|Primary")
+	FGameplayAttributeData VitalityBase;	// 体魄
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, VitalityBase);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PrimalForceBase, Category = "BaseAttributes|Primary")
+	FGameplayAttributeData PrimalForceBase;	// 本源
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, PrimalForceBase);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_InsightBase, Category = "BaseAttributes|Primary")
+	FGameplayAttributeData InsightBase;	// 悟性
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, InsightBase);
+
 	/**
 	* 附加属性值
 	*/
@@ -87,6 +99,18 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_DefenseTemp, Category = "TempAttributes|Combat")
 	FGameplayAttributeData DefenseTemp;  // 防御力
 	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, DefenseTemp);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_VitalityTemp, Category = "TempAttributes|Primary")
+	FGameplayAttributeData VitalityTemp;	// 体魄
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, VitalityTemp);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PrimalForceTemp, Category = "TempAttributes|Primary")
+	FGameplayAttributeData PrimalForceTemp;	// 本源
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, PrimalForceTemp);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_InsightTemp, Category = "TempAttributes|Primary")
+	FGameplayAttributeData InsightTemp;	// 悟性
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, InsightTemp);
 
 
 	/**
@@ -124,8 +148,23 @@ public:
 	FGameplayAttributeData Defense;  // 防御力 = Base + Temp
 	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, Defense);
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vitality, Category = "TotalAttributes|Primary")
+	FGameplayAttributeData Vitality;	// 体魄 = Base + Temp
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, Vitality);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PrimalForce, Category = "TotalAttributes|Primary")
+	FGameplayAttributeData PrimalForce;	// 本源 = Base + Temp
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, PrimalForce);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Insight, Category = "TotalAttributes|Primary")
+	FGameplayAttributeData Insight;	// 悟性 = Base + Temp
+	ATTRIBUTE_ACCESSORS(UXXBaseAttributeSet, Insight);
+
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	virtual void OnMaxHealthChanged(const FOnAttributeChangeData& Data);
+	virtual void OnMaxManaChanged(const FOnAttributeChangeData& Data);
 
 private:
 	/**
@@ -149,6 +188,15 @@ private:
 	UFUNCTION()
 	void OnRep_DefenseBase(const FGameplayAttributeData& OldDefenseBase) const;
 
+	UFUNCTION()
+	void OnRep_VitalityBase(const FGameplayAttributeData& OldVitalityBase) const;
+
+	UFUNCTION()
+	void OnRep_PrimalForceBase(const FGameplayAttributeData& OldPrimalForceBase) const;
+
+	UFUNCTION()
+	void OnRep_InsightBase(const FGameplayAttributeData& OldInsightBase) const;
+
 	/**
 	* Temp
 	*/
@@ -170,6 +218,15 @@ private:
 	UFUNCTION()
 	void OnRep_DefenseTemp(const FGameplayAttributeData& OldDefenseTemp) const;
 
+	UFUNCTION()
+	void OnRep_VitalityTemp(const FGameplayAttributeData& OldVitalityTemp) const;
+
+	UFUNCTION()
+	void OnRep_PrimalForceTemp(const FGameplayAttributeData& OldPrimalForceTemp) const;
+
+	UFUNCTION()
+	void OnRep_InsightTemp(const FGameplayAttributeData& OldInsightTemp) const;
+
 	/**
 	* Total
 	*/
@@ -177,7 +234,7 @@ private:
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
 
 	UFUNCTION()
 	void OnRep_HealthRe(const FGameplayAttributeData& OldHealthRe) const;
@@ -196,5 +253,13 @@ private:
 
 	UFUNCTION()
 	void OnRep_Defense(const FGameplayAttributeData& OldDefense) const;
-	
+
+	UFUNCTION()
+	void OnRep_Vitality(const FGameplayAttributeData& OldVitality) const;
+
+	UFUNCTION()
+	void OnRep_PrimalForce(const FGameplayAttributeData& OldPrimalForce) const;
+
+	UFUNCTION()
+	void OnRep_Insight(const FGameplayAttributeData& OldInsight) const;
 };

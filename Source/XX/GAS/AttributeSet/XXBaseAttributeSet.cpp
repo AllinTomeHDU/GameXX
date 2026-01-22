@@ -16,6 +16,12 @@ UXXBaseAttributeSet::UXXBaseAttributeSet()
 void UXXBaseAttributeSet::InitAttributes(const TArray<TSubclassOf<UGameplayEffect>>& EffectClassArr, float Level)
 {
 	auto ASC = GetOwningAbilitySystemComponentChecked();
+
+	ASC->GetGameplayAttributeValueChangeDelegate(GetMaxHealthAttribute())
+		.AddUObject(this, &UXXBaseAttributeSet::OnMaxHealthChanged);
+	ASC->GetGameplayAttributeValueChangeDelegate(GetMaxManaAttribute())
+		.AddUObject(this, &UXXBaseAttributeSet::OnMaxManaChanged);
+
 	for (const auto& EffectClass : EffectClassArr)
 	{
 		FActiveGameplayEffectHandle ActiveEffectHandle;
@@ -69,6 +75,9 @@ void UXXBaseAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, ManaReBase, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, AttackBase, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, DefenseBase, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, VitalityBase, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, PrimalForceBase, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, InsightBase, COND_None, REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, MaxHealthTemp, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, HealthReTemp, COND_None, REPNOTIFY_Always);
@@ -76,6 +85,9 @@ void UXXBaseAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, ManaReTemp, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, AttackTemp, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, DefenseTemp, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, VitalityTemp, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, PrimalForceTemp, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, InsightTemp, COND_None, REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
@@ -85,6 +97,35 @@ void UXXBaseAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, ManaRe, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, Attack, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, Defense, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, Vitality, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, PrimalForce, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UXXBaseAttributeSet, Insight, COND_None, REPNOTIFY_Always);
+}
+
+void UXXBaseAttributeSet::OnMaxHealthChanged(const FOnAttributeChangeData& Data)
+{
+	const float OldMax = Data.OldValue;
+	const float NewMax = Data.NewValue;
+	const float Delta = NewMax - OldMax;
+	if (!FMath::IsNearlyZero(Delta))
+	{
+		float CurrentHealth = GetHealth();
+		float NewHealth = CurrentHealth + Delta;
+		SetHealth(FMath::Clamp(NewHealth, 0.f, NewMax));
+	}
+}
+
+void UXXBaseAttributeSet::OnMaxManaChanged(const FOnAttributeChangeData& Data)
+{
+	const float OldMax = Data.OldValue;
+	const float NewMax = Data.NewValue;
+	const float Delta = NewMax - OldMax;
+	if (!FMath::IsNearlyZero(Delta))
+	{
+		float CurrentMana = GetMana();
+		float NewMana = CurrentMana + Delta;
+		SetMana(FMath::Clamp(NewMana, 0.f, NewMax));
+	}
 }
 
 #pragma region Base Attributes
@@ -116,6 +157,21 @@ void UXXBaseAttributeSet::OnRep_AttackBase(const FGameplayAttributeData& OldAtta
 void UXXBaseAttributeSet::OnRep_DefenseBase(const FGameplayAttributeData& OldDefenseBase) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, DefenseBase, OldDefenseBase);
+}
+
+void UXXBaseAttributeSet::OnRep_VitalityBase(const FGameplayAttributeData& OldVitalityBase) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, VitalityBase, OldVitalityBase);
+}
+
+void UXXBaseAttributeSet::OnRep_PrimalForceBase(const FGameplayAttributeData& OldPrimalForceBase) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, PrimalForceBase, OldPrimalForceBase);
+}
+
+void UXXBaseAttributeSet::OnRep_InsightBase(const FGameplayAttributeData& OldInsightBase) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, InsightBase, OldInsightBase);
 }
 #pragma endregion
 
@@ -149,6 +205,21 @@ void UXXBaseAttributeSet::OnRep_DefenseTemp(const FGameplayAttributeData& OldDef
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, DefenseTemp, OldDefenseTemp);
 }
+
+void UXXBaseAttributeSet::OnRep_VitalityTemp(const FGameplayAttributeData& OldVitalityTemp) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, VitalityTemp, OldVitalityTemp);
+}
+
+void UXXBaseAttributeSet::OnRep_PrimalForceTemp(const FGameplayAttributeData& OldPrimalForceTemp) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, PrimalForceTemp, OldPrimalForceTemp);
+}
+
+void UXXBaseAttributeSet::OnRep_InsightTemp(const FGameplayAttributeData& OldInsightTemp) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, InsightTemp, OldInsightTemp);
+}
 #pragma endregion
 
 #pragma region Total Attributes
@@ -157,7 +228,7 @@ void UXXBaseAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) 
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, Health, OldHealth);
 }
 
-void UXXBaseAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
+void UXXBaseAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, MaxHealth, OldMaxHealth);
 }
@@ -190,5 +261,20 @@ void UXXBaseAttributeSet::OnRep_Attack(const FGameplayAttributeData& OldAttack) 
 void UXXBaseAttributeSet::OnRep_Defense(const FGameplayAttributeData& OldDefense) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, Defense, OldDefense);
+}
+
+void UXXBaseAttributeSet::OnRep_Vitality(const FGameplayAttributeData& OldVitality) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, Vitality, OldVitality);
+}
+
+void UXXBaseAttributeSet::OnRep_PrimalForce(const FGameplayAttributeData& OldPrimalForce) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, PrimalForce, OldPrimalForce);
+}
+
+void UXXBaseAttributeSet::OnRep_Insight(const FGameplayAttributeData& OldInsight) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXBaseAttributeSet, Insight, OldInsight);
 }
 #pragma endregion

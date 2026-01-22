@@ -7,11 +7,11 @@
 
 UXXMMC_Primary_PrimalForce::UXXMMC_Primary_PrimalForce()
 {
-	PrimalForceBaseDef.AttributeToCapture = UXXHeroAttributeSet::GetPrimalForceBaseAttribute();
+	PrimalForceBaseDef.AttributeToCapture = UXXBaseAttributeSet::GetPrimalForceBaseAttribute();
 	PrimalForceBaseDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	PrimalForceBaseDef.bSnapshot = false;
 
-	PrimalForceTempDef.AttributeToCapture = UXXHeroAttributeSet::GetPrimalForceTempAttribute();
+	PrimalForceTempDef.AttributeToCapture = UXXBaseAttributeSet::GetPrimalForceTempAttribute();
 	PrimalForceTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	PrimalForceTempDef.bSnapshot = false;
 

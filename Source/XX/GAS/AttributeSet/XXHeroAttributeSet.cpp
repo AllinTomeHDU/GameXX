@@ -13,6 +13,16 @@ UXXHeroAttributeSet::UXXHeroAttributeSet()
 	
 }
 
+void UXXHeroAttributeSet::InitAttributes(const TArray<TSubclassOf<UGameplayEffect>>& EffectClassArr, float Level)
+{
+	auto ASC = GetOwningAbilitySystemComponentChecked();
+
+	ASC->GetGameplayAttributeValueChangeDelegate(GetMaxStaminaAttribute())
+		.AddUObject(this, &UXXHeroAttributeSet::OnMaxStaminaChanged);
+
+	Super::InitAttributes(EffectClassArr, Level);
+}
+
 void UXXHeroAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
@@ -48,25 +58,29 @@ void UXXHeroAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, MaxStaminaBase, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, StaminaReBase, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, MaxFormBase, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, VitalityBase, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, PrimalForceBase, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, InsightBase, COND_None, REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, MaxStaminaTemp, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, StaminaReTemp, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, MaxFormTemp, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, VitalityTemp, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, PrimalForceTemp, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, InsightTemp, COND_None, REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, Stamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, MaxStamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, StaminaRe, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, Form, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, MaxForm, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, Vitality, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, PrimalForce, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UXXHeroAttributeSet, Insight, COND_None, REPNOTIFY_Always);
+}
+
+void UXXHeroAttributeSet::OnMaxStaminaChanged(const FOnAttributeChangeData& Data)
+{
+	const float OldMax = Data.OldValue;
+	const float NewMax = Data.NewValue;
+	const float Delta = NewMax - OldMax;
+	if (!FMath::IsNearlyZero(Delta))
+	{
+		float CurrentStamina = GetStamina();
+		float NewStamina = CurrentStamina + Delta;
+		SetStamina(FMath::Clamp(NewStamina, 0.f, NewMax));
+	}
 }
 
 #pragma region Base Attributes
@@ -84,21 +98,6 @@ void UXXHeroAttributeSet::OnRep_MaxFormBase(const FGameplayAttributeData& OldMax
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, MaxFormBase, OldMaxFormBase);
 }
-
-void UXXHeroAttributeSet::OnRep_VitalityBase(const FGameplayAttributeData& OldVitalityBase) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, VitalityBase, OldVitalityBase);
-}
-
-void UXXHeroAttributeSet::OnRep_PrimalForceBase(const FGameplayAttributeData& OldPrimalForceBase) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, PrimalForceBase, OldPrimalForceBase);
-}
-
-void UXXHeroAttributeSet::OnRep_InsightBase(const FGameplayAttributeData& OldInsightBase) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, InsightBase, OldInsightBase);
-}
 #pragma endregion
 
 #pragma region Temp Attributes
@@ -115,21 +114,6 @@ void UXXHeroAttributeSet::OnRep_StaminaReTemp(const FGameplayAttributeData& OldS
 void UXXHeroAttributeSet::OnRep_MaxFormTemp(const FGameplayAttributeData& OldMaxFormTemp) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, MaxFormTemp, OldMaxFormTemp);
-}
-
-void UXXHeroAttributeSet::OnRep_VitalityTemp(const FGameplayAttributeData& OldVitalityTemp) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, VitalityTemp, OldVitalityTemp);
-}
-
-void UXXHeroAttributeSet::OnRep_PrimalForceTemp(const FGameplayAttributeData& OldPrimalForceTemp) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, PrimalForceTemp, OldPrimalForceTemp);
-}
-
-void UXXHeroAttributeSet::OnRep_InsightTemp(const FGameplayAttributeData& OldInsightTemp) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, InsightTemp, OldInsightTemp);
 }
 #pragma endregion
 
@@ -157,20 +141,5 @@ void UXXHeroAttributeSet::OnRep_Form(const FGameplayAttributeData& OldForm) cons
 void UXXHeroAttributeSet::OnRep_MaxForm(const FGameplayAttributeData& OldMaxForm) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, MaxForm, OldMaxForm);
-}
-
-void UXXHeroAttributeSet::OnRep_Vitality(const FGameplayAttributeData& OldVitality) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, Vitality, OldVitality);
-}
-
-void UXXHeroAttributeSet::OnRep_PrimalForce(const FGameplayAttributeData& OldPrimalForce) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, PrimalForce, OldPrimalForce);
-}
-
-void UXXHeroAttributeSet::OnRep_Insight(const FGameplayAttributeData& OldInsight) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UXXHeroAttributeSet, Insight, OldInsight);
 }
 #pragma endregion

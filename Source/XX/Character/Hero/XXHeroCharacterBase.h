@@ -6,8 +6,6 @@
 #include "../XXCharacterBase.h"
 #include "XXHeroCharacterBase.generated.h"
 
-class UWidgetComponent;
-
 
 /**
  * 
@@ -29,11 +27,8 @@ private:
 	void InitAbilitySystemActorInfo();
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Multiplayer Room", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* HeroMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Multiplayer Room", meta = (AllowPrivateAccess = "true"))
-	UWidgetComponent* HeadTopWidget;
 
 	UPROPERTY(EditAnywhere, Category = "GAS")
 	class UXXPDA_AbilitiesBase* AbilitiesInputData;

@@ -16,6 +16,8 @@ class XX_API UXXHeroAttributeSet : public UXXBaseAttributeSet
 public:
 	UXXHeroAttributeSet();
 
+	virtual void InitAttributes(const TArray<TSubclassOf<UGameplayEffect>>& EffectClassArr, float Level) override;
+
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
@@ -35,18 +37,6 @@ public:
 	FGameplayAttributeData MaxFormBase;  // 最大势
 	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, MaxFormBase);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_VitalityBase, Category = "BaseAttributes|Primary")
-	FGameplayAttributeData VitalityBase;	// 体魄
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, VitalityBase);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PrimalForceBase, Category = "BaseAttributes|Primary")
-	FGameplayAttributeData PrimalForceBase;	// 本源
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, PrimalForceBase);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_InsightBase, Category = "BaseAttributes|Primary")
-	FGameplayAttributeData InsightBase;	// 悟性
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, InsightBase);
-
 	/**
 	* 附加属性值
 	*/
@@ -61,18 +51,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxFormTemp, Category = "TempAttributes|Status")
 	FGameplayAttributeData MaxFormTemp;  // 最大势
 	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, MaxFormTemp);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_VitalityTemp, Category = "TempAttributes|Primary")
-	FGameplayAttributeData VitalityTemp;	// 体魄
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, VitalityTemp);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PrimalForceTemp, Category = "TempAttributes|Primary")
-	FGameplayAttributeData PrimalForceTemp;	// 本源
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, PrimalForceTemp);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_InsightTemp, Category = "TempAttributes|Primary")
-	FGameplayAttributeData InsightTemp;	// 悟性
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, InsightTemp);
 
 	/**
 	* 最终属性值
@@ -97,20 +75,10 @@ public:
 	FGameplayAttributeData MaxForm;  // 最大势 = Base + Temp
 	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, MaxForm);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vitality, Category = "TotalAttributes|Primary")
-	FGameplayAttributeData Vitality;	// 体魄 = Base + Temp
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, Vitality);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PrimalForce, Category = "TotalAttributes|Primary")
-	FGameplayAttributeData PrimalForce;	// 本源 = Base + Temp
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, PrimalForce);
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Insight, Category = "TotalAttributes|Primary")
-	FGameplayAttributeData Insight;	// 悟性 = Base + Temp
-	ATTRIBUTE_ACCESSORS(UXXHeroAttributeSet, Insight);
-
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	virtual void OnMaxStaminaChanged(const FOnAttributeChangeData& Data);
 
 private:
 	/**
@@ -125,15 +93,6 @@ private:
 	UFUNCTION()
 	void OnRep_MaxFormBase(const FGameplayAttributeData& OldMaxFormBase) const;
 
-	UFUNCTION()
-	void OnRep_VitalityBase(const FGameplayAttributeData& OldVitalityBase) const;
-
-	UFUNCTION()
-	void OnRep_PrimalForceBase(const FGameplayAttributeData& OldPrimalForceBase) const;
-
-	UFUNCTION()
-	void OnRep_InsightBase(const FGameplayAttributeData& OldInsightBase) const;
-
 	/**
 	* 附加属性值
 	*/
@@ -145,15 +104,6 @@ private:
 
 	UFUNCTION()
 	void OnRep_MaxFormTemp(const FGameplayAttributeData& OldMaxFormTemp) const;
-
-	UFUNCTION()
-	void OnRep_VitalityTemp(const FGameplayAttributeData& OldVitalityTemp) const;
-
-	UFUNCTION()
-	void OnRep_PrimalForceTemp(const FGameplayAttributeData& OldPrimalForceTemp) const;
-
-	UFUNCTION()
-	void OnRep_InsightTemp(const FGameplayAttributeData& OldInsightTemp) const;
 
 	/**
 	* 最终属性值
@@ -172,13 +122,4 @@ private:
 
 	UFUNCTION()
 	void OnRep_MaxForm(const FGameplayAttributeData& OldMaxForm) const;
-
-	UFUNCTION()
-	void OnRep_Vitality(const FGameplayAttributeData& OldVitality) const;
-
-	UFUNCTION()
-	void OnRep_PrimalForce(const FGameplayAttributeData& OldPrimalForce) const;
-
-	UFUNCTION()
-	void OnRep_Insight(const FGameplayAttributeData& OldInsight) const;
 };

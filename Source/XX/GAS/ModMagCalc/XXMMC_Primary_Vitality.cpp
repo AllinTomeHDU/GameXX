@@ -7,11 +7,11 @@
 
 UXXMMC_Primary_Vitality::UXXMMC_Primary_Vitality()
 {
-	VitalityBaseDef.AttributeToCapture = UXXHeroAttributeSet::GetVitalityBaseAttribute();
+	VitalityBaseDef.AttributeToCapture = UXXBaseAttributeSet::GetVitalityBaseAttribute();
 	VitalityBaseDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	VitalityBaseDef.bSnapshot = false;
 
-	VitalityTempDef.AttributeToCapture = UXXHeroAttributeSet::GetVitalityTempAttribute();
+	VitalityTempDef.AttributeToCapture = UXXBaseAttributeSet::GetVitalityTempAttribute();
 	VitalityTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	VitalityTempDef.bSnapshot = false;
 

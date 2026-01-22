@@ -23,4 +23,5 @@ private:
 	FGameplayEffectAttributeCaptureDefinition MaxHealthBaseDef;
 	FGameplayEffectAttributeCaptureDefinition MaxHealthTempDef;
 
+	FGameplayEffectAttributeCaptureDefinition VitalityDef;
 };

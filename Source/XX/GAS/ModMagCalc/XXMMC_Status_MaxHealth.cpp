@@ -2,7 +2,8 @@
 
 
 #include "XXMMC_Status_MaxHealth.h"
-#include "XX/GAS/AttributeSet/XXHeroAttributeSet.h"
+#include "XX/GAS/AttributeSet/XXBaseAttributeSet.h"
+#include "XX/GAS/Interface/XXGASInterface.h"
 
 
 UXXMMC_Status_MaxHealth::UXXMMC_Status_MaxHealth()
@@ -15,8 +16,13 @@ UXXMMC_Status_MaxHealth::UXXMMC_Status_MaxHealth()
 	MaxHealthTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	MaxHealthTempDef.bSnapshot = false;
 
+	VitalityDef.AttributeToCapture = UXXBaseAttributeSet::GetVitalityAttribute();
+	VitalityDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
+	VitalityDef.bSnapshot = false;
+
 	RelevantAttributesToCapture.Add(MaxHealthBaseDef);
 	RelevantAttributesToCapture.Add(MaxHealthTempDef);
+	RelevantAttributesToCapture.Add(VitalityDef);
 }
 
 float UXXMMC_Status_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
@@ -31,5 +37,8 @@ float UXXMMC_Status_MaxHealth::CalculateBaseMagnitude_Implementation(const FGame
 	float MaxHealthTempValue = 0.f;
 	GetCapturedAttributeMagnitude(MaxHealthTempDef, Spec, EvaluateParameters, MaxHealthTempValue);
 
-	return MaxHealthBaseValue + MaxHealthTempValue;
+	float VitalityValue = 0.f;
+	GetCapturedAttributeMagnitude(VitalityDef, Spec, EvaluateParameters, VitalityValue);
+
+	return MaxHealthBaseValue + MaxHealthTempValue + VitalityValue;
 }

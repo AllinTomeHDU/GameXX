@@ -30,5 +30,5 @@ public:
 	virtual UXXBaseAbilitySystemComponent* GetBaseAbilitySystemComponent() const = 0;
 	virtual UXXBaseAttributeSet* GetBaseAttributeSet() const = 0;
 
-	virtual int32 GetPlayerLevel() const { return 0; }
+	virtual int32 GetCharacterLevel() const { return 0; }
 };

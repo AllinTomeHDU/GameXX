@@ -7,15 +7,15 @@
 
 UXXMMC_Combat_Defense::UXXMMC_Combat_Defense()
 {
-	DefenseBaseDef.AttributeToCapture = UXXHeroAttributeSet::GetDefenseBaseAttribute();
+	DefenseBaseDef.AttributeToCapture = UXXBaseAttributeSet::GetDefenseBaseAttribute();
 	DefenseBaseDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	DefenseBaseDef.bSnapshot = false;
 
-	DefenseTempDef.AttributeToCapture = UXXHeroAttributeSet::GetDefenseTempAttribute();
+	DefenseTempDef.AttributeToCapture = UXXBaseAttributeSet::GetDefenseTempAttribute();
 	DefenseTempDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	DefenseTempDef.bSnapshot = false;
 
-	VitalityDef.AttributeToCapture = UXXHeroAttributeSet::GetVitalityAttribute();
+	VitalityDef.AttributeToCapture = UXXBaseAttributeSet::GetVitalityAttribute();
 	VitalityDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	VitalityDef.bSnapshot = false;
 
